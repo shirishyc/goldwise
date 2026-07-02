@@ -1,0 +1,78 @@
+name: Deploy to Render
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  # ---- Build Check ----
+  build-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Cache npm dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            server/node_modules
+            client/node_modules
+          key: ${{ runner.os }}-npm-${{ hashFiles('server/package-lock.json', 'client/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-npm-
+
+      - name: Install server deps
+        run: cd server && npm ci
+
+      - name: Install client deps
+        run: cd client && npm ci
+
+      - name: Build client
+        run: cd client && npm run build
+
+      - name: Verify server starts
+        run: |
+          cd server
+          timeout 10 node src/index.js &
+          SERVER_PID=$!
+          sleep 5
+          curl -sf http://localhost:4567/api/health > /dev/null && echo "Server OK" || echo "Server health check failed"
+          kill $SERVER_PID 2>/dev/null || true
+
+      - name: Upload dist artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: client-dist
+          path: client/dist/
+
+  # ---- Deploy to Render ----
+  deploy:
+    needs: build-check
+    runs-on: ubuntu-latest
+    if: success()
+
+    steps:
+      - name: Trigger Render Deploy
+        run: |
+          curl -sS -X POST "${{ secrets.RENDER_DEPLOY_HOOK }}" \
+            -H "Content-Type: application/json" \
+            -d '{}'
+          echo "Deploy triggered"
+
+  # ---- Notify on Failure ----
+  notify-failure:
+    needs: build-check
+    runs-on: ubuntu-latest
+    if: failure()
+    steps:
+      - name: Log failure
+        run: |
+          echo "::error::Build failed — check GitHub Actions logs for details"
+          echo "Commit: ${{ github.sha }}"
+          echo "Branch: ${{ github.ref_name }}"

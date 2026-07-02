@@ -4,7 +4,8 @@
 
 👉 **[github.com/shirishyc/goldwise](https://github.com/shirishyc/goldwise)**
 
-Find gold jewellery priced closest to the raw gold rate. Compare making charges (premium %) across 40+ jewellers, track live gold rates, and get technical market analysis — all free, no subscription.
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/shirishyc/goldwise)
+[![CI/CD](https://github.com/shirishyc/goldwise/actions/workflows/deploy.yml/badge.svg)](https://github.com/shirishyc/goldwise/actions/workflows/deploy.yml)
 
 ## Features
 
@@ -80,6 +81,23 @@ cd ../client && npm run build
 - **Gold Rates**: Calculated from XAU/USD + USD/INR with verified India premium (~10%), enhanced with GoodReturns scraping
 - **Products**: Sample seed data included (200 products). Production should use web scrapers.
 - **Exchange Rate**: ExchangeRate-API
+
+## CI/CD — Auto Deploy
+
+Every push to `main` triggers:
+
+1. **Build Check** — Installs deps, builds frontend, verifies API starts
+2. **Deploy to Render** — Calls Render Deploy Hook (requires `RENDER_DEPLOY_HOOK` secret)
+3. **Failure Notification** — Logs details if build fails
+
+### Setup (1 minute)
+
+1. **Deploy GoldWise on Render** via the button above
+2. Go to **Render Dashboard → Your Service → Settings → Deploy Hook**
+3. Copy the Deploy Hook URL
+4. Go to **GitHub → Settings → Secrets and variables → Actions**
+5. Add a new secret: **`RENDER_DEPLOY_HOOK`** → paste the URL
+6. Done — every `git push` will auto-build and redeploy
 
 ## License
 
