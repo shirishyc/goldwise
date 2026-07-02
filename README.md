@@ -30,7 +30,18 @@ Find gold jewellery priced closest to the raw gold rate. Compare making charges 
 
 ## Quick Start
 
+### Option 1: Deploy to Render (Free — 1 click)
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/shirishyc/goldwise)
+
+Click the button above, connect your GitHub, and Render will build + deploy GoldWise to a public URL like `https://goldwise.onrender.com` — free SSL included.
+
+### Option 2: Docker (self-host)
 ```bash
+docker compose up -d
+# Open http://localhost:4567
+```
+
+### Option 3: Manual (dev)
 # Install dependencies
 cd server && npm install
 cd ../client && npm install
