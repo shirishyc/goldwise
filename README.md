@@ -1,6 +1,8 @@
 # GoldWise 🏆
 
-**Open-source gold jewellery price intelligence platform** — the free alternative to Karatwise.
+**Open-source gold jewellery price intelligence platform** — the free Karatwise alternative.
+
+👉 **[github.com/shirishyc/goldwise](https://github.com/shirishyc/goldwise)**
 
 Find gold jewellery priced closest to the raw gold rate. Compare making charges (premium %) across 40+ jewellers, track live gold rates, and get technical market analysis — all free, no subscription.
 
