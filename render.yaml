@@ -1,15 +1,17 @@
 services:
-  # Template for Render.com Blueprint deployment
+  # Render Blueprint — builds from Dockerfile in the repo
   - type: web
     name: goldwise
-    runtime: image
+    env: docker
     repo: https://github.com/shirishyc/goldwise
     plan: free
     dockerfilePath: ./Dockerfile
     healthCheckPath: /api/health
     envVars:
       - key: PORT
-        value: 4567
+        value: "4567"
       - key: NODE_ENV
         value: production
     autoDeploy: true
+    # Render free tier sleeps after inactivity
+    # Upgrade to Starter+ for always-on
