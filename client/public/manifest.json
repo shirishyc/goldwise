@@ -1,0 +1,16 @@
+{
+  "name": "GoldWise",
+  "short_name": "GoldWise",
+  "description": "Open source gold jewellery price intelligence — find the best value gold",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#faf9f7",
+  "theme_color": "#92400e",
+  "orientation": "portrait-primary",
+  "lang": "en-IN",
+  "categories": ["finance", "shopping"],
+  "icons": [
+    { "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}

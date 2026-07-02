@@ -1,0 +1,21 @@
+{
+  "name": "goldwise-server",
+  "version": "1.0.0",
+  "description": "GoldWise — Open-source gold price intelligence backend",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "node --watch src/index.js",
+    "scrape-rates": "node src/scrapers/gold-rates.js",
+    "seed": "node src/scrapers/seed-data.js"
+  },
+  "dependencies": {
+    "better-sqlite3": "^11.0.0",
+    "cheerio": "^1.0.0",
+    "cors": "^2.8.5",
+    "express": "^4.21.0",
+    "node-cron": "^3.0.3",
+    "node-fetch": "^3.3.2"
+  }
+}
